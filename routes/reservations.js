@@ -12,15 +12,14 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  // Validation de la demande avec Joi
-  const { error } = validreservations(req.body);  // Valider avec Joi
+  const { error } = validreservations(req.body); 
   if (error) return res.status(400).json({ message: error.details[0].message });
 
-  const { date, time, firstName, lastName, phone, email } = req.body;  // Assurez-vous d'extraire tous les champs
+  const { date, time, firstName, lastName, phone, email } = req.body;  
 
   const existingReservation = await reservationModel.findOne({ date, time }); 
   if (existingReservation) {
-    return res.status(400).json({ message: 'Ce créneau est déjà réservé' });
+    return res.status(400).json({ message: 'This slot is already reserved' });
   }
 
   const reservation = new reservationModel({
