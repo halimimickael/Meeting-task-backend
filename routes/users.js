@@ -1,19 +1,8 @@
 const express= require("express");
 const bcrypt = require("bcrypt");
 const { UserModel, userValid, loginValid, createToken } = require("../models/userModel");
-const {verifyToken} = require("../middlewares/verifyToken");
 
 const router = express.Router();
-
-
-router.get("/" , async(req,res)=> {
-  res.json({msg:"users endpoint work"})
-})
-
-router.get("/success", verifyToken, async (req, res) => {
-  let data = await reservationModel.find({});
-  res.json(data);
-});
 
 router.post("/",async(req,res) => {
   let valdiateBody = userValid(req.body);
@@ -36,11 +25,6 @@ router.post("/",async(req,res) => {
   }
 })
 
-router.get("/reservation", async (req,res)=>{
-  let data = await UserModel.find({});
-  res.json(data);
-  data.filter
-});
 
 router.post("/login", async (req, res) => {
   let validateBody = loginValid(req.body);

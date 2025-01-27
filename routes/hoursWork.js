@@ -55,7 +55,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     const { date, hourStart, hourFinish } = req.body;
   
-    // Validate the data
     const { error } = validateHoursWork(req.body);
     if (error) return res.status(400).json({ message: error.details[0].message });
   
@@ -68,7 +67,6 @@ router.put("/:id", async (req, res) => {
     }
   
     try {
-      // Find the existing hoursWork by ID
       const hoursWork = await hoursWorkModel.findById(req.params.id);
       if (!hoursWork) {
         return res.status(404).json({
@@ -76,12 +74,10 @@ router.put("/:id", async (req, res) => {
         });
       }
   
-      // Update the fields
       hoursWork.date = date;
       hoursWork.hourStart = hourStart;
       hoursWork.hourFinish = hourFinish;
   
-      // Save the updated document
       const updatedHoursWork = await hoursWork.save();
       res.status(200).json(updatedHoursWork);
     } catch (err) {
